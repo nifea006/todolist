@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import TodoAdd from "./components/todo_add/TodoAdd";
+import TodoList from "./components/todo_list/TodoList";
+import TodoRemove from "./components/todo_remove/TodoRemove";
 
 function App() {
   // The To-Do List function to load and save tasks from local storage
@@ -9,7 +12,7 @@ function App() {
   });
   const [newTask, setNewTask] = useState("");
 
-  // Svae tasks to local storage whenever they change
+  // Save tasks to local storage whenever they change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -44,33 +47,13 @@ function App() {
         </div>
 
         {/* Add task structure */}
-        <div className="inputTask">
-          <input type="text" className="addTask" placeholder="Enter a new task" value={newTask} onChange={(e) => setNewTask(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAddTask()} />
-          <button className="addButton" onClick={handleAddTask}>
-            Legg til
-          </button>
-        </div>
+        <TodoAdd newTask={newTask} setNewTask={setNewTask} handleAddTask={handleAddTask} />
 
         {/* Task list structure */}
-        <ul>
-          {tasks.map((task, i) => (
-            <li key={i} className={task.completed ? "completed" : ""}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleTaskCompletion(i)}
-                />
-                <span>{task.text}</span>
-              </label>
-            </li>
-          ))}
-        </ul>
+        <TodoList tasks={tasks} toggleTaskCompletion={toggleTaskCompletion} />
 
         {/* Remove completed tasks button */}
-        <button className="removeButton" onClick={handleRemoveCompleted}>
-          Fjern fullførte oppgaver
-        </button>
+        <TodoRemove handleRemoveCompleted={handleRemoveCompleted} />
       </div>
     </div>
   );

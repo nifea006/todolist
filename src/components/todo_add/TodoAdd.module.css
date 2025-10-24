@@ -1,0 +1,36 @@
+.addTaskOverlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+input[name="insertNewTask"] {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+input[name="insertNewTask"]:hover {
+    background-color: rgb(245, 245, 245);
+    scale: 1.01;
+}
+
+.addButton {
+    background-color: rgb(0, 190, 0);
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 7px;
+}
+
+.addButton:hover {
+    cursor: pointer;
+    background-color: rgb(0, 210, 0);
+    scale: 1.05;
+}
+
+.hidden {
+    display: none;
+}
