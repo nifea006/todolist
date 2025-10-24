@@ -2,41 +2,40 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+  // The To-Do List function to load and save tasks from local storage
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
   const [newTask, setNewTask] = useState("");
 
-  // Load saved tasks from localStorage
-  useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    }
-  }, []);
-
-  // Save tasks to localStorage
+  // Svae tasks to local storage whenever they change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // Add new task
+  // The function to add a new task (when the button is clicked)
   const handleAddTask = () => {
     if (newTask.trim() === "") return;
     setTasks([...tasks, { text: newTask, completed: false }]);
     setNewTask("");
   };
 
-  // Toggle completed state
+  // Function to cross off a task when completed (when the checkbox is clicked)
   const toggleTaskCompletion = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].completed = !updatedTasks[index].completed;
-    setTasks(updatedTasks);
+    setTasks((prev) =>
+      prev.map((task, i) =>
+        i === index ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
-  // Remove completed tasks
+  // Function to remove all completed tasks (when the button is clicked all crossed off tasks are removed)
   const handleRemoveCompleted = () => {
-    setTasks(tasks.filter((task) => !task.completed));
+    setTasks(tasks.filter((t) => !t.completed));
   };
 
+  // The main return function that displays the To-Do List app
   return (
     <div className="App">
       <div className="container">
@@ -44,25 +43,32 @@ function App() {
           <h1>To-Do List</h1>
         </div>
 
+        {/* Add task structure */}
         <div className="inputTask">
-          <input type="text" name="task" className="addTask" placeholder="Enter a new task" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
-          <button type="button" className="addButton" onClick={handleAddTask}>
+          <input type="text" className="addTask" placeholder="Enter a new task" value={newTask} onChange={(e) => setNewTask(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAddTask()} />
+          <button className="addButton" onClick={handleAddTask}>
             Legg til
           </button>
         </div>
 
+        {/* Task list structure */}
         <ul>
-          {tasks.map((task, index) => (
-            <li key={index} className={task.completed ? "completed" : ""}>
+          {tasks.map((task, i) => (
+            <li key={i} className={task.completed ? "completed" : ""}>
               <label>
-                <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(index)} />
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => toggleTaskCompletion(i)}
+                />
                 <span>{task.text}</span>
               </label>
             </li>
           ))}
         </ul>
 
-        <button type="button" className="removeButton" onClick={handleRemoveCompleted}>
+        {/* Remove completed tasks button */}
+        <button className="removeButton" onClick={handleRemoveCompleted}>
           Fjern fullførte oppgaver
         </button>
       </div>
