@@ -4,19 +4,25 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     background-color: lightgray;
 }
 
+.app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    width: 100vw;
+    gap: 10px;
+}
+
 .container {
+    justify-self: center;
+    align-self: center;
     background-color: rgb(150, 150, 150);
     border: 2px solid;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    min-width: 300px;
 }
 
 .title {
@@ -28,3 +34,59 @@ body {
 h1 {
     padding: 10px;
 }
+
+
+/* --- Visual upgrades, keep same color tones --- */
+.container {
+  border: 2px solid rgba(0,0,0,0.15);
+  background: #faf7f2;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  min-width: 420px;
+}
+
+.headerRow { display:flex; margin-bottom:12px; }
+.tabs { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+.tab {
+  padding:6px 10px;
+  border-radius:8px;
+  background: rgba(195,170,140,0.08);
+  display:flex;
+  gap:8px;
+  align-items:center;
+  cursor:pointer;
+  border: 1px solid transparent;
+}
+.tab.active { background: rgba(195,170,140,0.14); border-color: rgba(0,0,0,0.06); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+
+.addTab { display:flex; gap:8px; align-items:center; margin-left:8px; }
+.addTab input { padding:6px; border-radius:6px; border:1px solid rgba(0,0,0,0.08); }
+.addTab button { padding:6px 10px; border-radius:6px; }
+
+/* Title bar */
+.titleBar { display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+.titleLeft { display:flex; align-items:center; gap:10px; }
+.titleEdit { font-size:1.4rem; padding:6px 8px; border-radius:6px; border:1px solid rgba(0,0,0,0.08); }
+
+/* no selection */
+.noSelection { padding: 24px; text-align:center; color: #666; font-style: italic; }
+
+/* Inputs & buttons */
+.inputTask { display:flex; gap:8px; margin:8px 0 12px 0; }
+.inputTask input { padding:8px; border-radius:6px; border:1px solid rgba(0,0,0,0.08); min-width:260px; }
+.inputTask button { padding:8px 12px; border-radius:8px; background-color: rgb(195,170,140); border:none; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+ul { list-style:none; padding-left:0; margin:8px 0; max-height:320px; overflow:auto; }
+li { padding:8px; border-radius:8px; margin-bottom:8px; display:flex; align-items:center; background: rgba(255,255,255,0.9); border:1px solid rgba(0,0,0,0.03); }
+li label { display:flex; align-items:center; gap:8px; width:100%; }
+
+.completed span { text-decoration: line-through; color: gray; opacity: 0.7; }
+
+/* small buttons */
+.smallBtn { background:transparent; border:none; cursor:pointer; padding:4px 6px; border-radius:6px; }
+.smallBtn:hover { background: rgba(0,0,0,0.04); }
+
+/* actions row */
+.actionsRow { display:flex; gap:8px; margin-top:12px; }

@@ -1,59 +1,172 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import TodoAdd from "./components/todo_add/TodoAdd";
-import TodoList from "./components/todo_list/TodoList";
-import TodoRemove from "./components/todo_remove/TodoRemove";
 
 function App() {
-  // The To-Do List function to load and save tasks from local storage
-  const [tasks, setTasks] = useState(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
+  // Manage multiple lists (tabs) stored as array of { id, title, tasks: [{text,completed}] }
+  const [lists, setLists] = useState([]);
+  const [selectedListId, setSelectedListId] = useState(null);
+  const [newListTitle, setNewListTitle] = useState("");
   const [newTask, setNewTask] = useState("");
+  const [editingTitle, setEditingTitle] = useState(false);
+  const titleInputRef = useRef(null);
 
-  // Save tasks to local storage whenever they change
+  // Load saved lists from localStorage
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    try {
+      const raw = localStorage.getItem("todo_lists_v1");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setLists(parsed);
+        if (parsed.length > 0) setSelectedListId(parsed[0].id);
+      } else {
+        // Optionally initialize with one sample list
+        // setLists([{ id: Date.now(), title: "My List", tasks: [] }]);
+        // setSelectedListId(Date.now());
+      }
+    } catch (e) {
+      console.error("Failed to load lists:", e);
+    }
+  }, []);
 
-  // The function to add a new task (when the button is clicked)
-  const handleAddTask = () => {
+  // Save lists
+  useEffect(() => {
+    try {
+      localStorage.setItem("todo_lists_v1", JSON.stringify(lists));
+    } catch (e) {
+      console.error("Failed to save lists:", e);
+    }
+  }, [lists]);
+
+  // Update document title when selected list changes
+  useEffect(() => {
+    const selected = lists.find((l) => l.id === selectedListId);
+    document.title = selected ? selected.title : "To-Do App";
+  }, [selectedListId, lists]);
+
+  // Helpers
+  const createList = (title) => {
+    const newList = { id: Date.now() + Math.random(), title: title || "New List", tasks: [] };
+    setLists((prev) => [...prev, newList]);
+    setSelectedListId(newList.id);
+    setNewListTitle("");
+  };
+
+  const removeList = (id) => {
+    const remaining = lists.filter((l) => l.id !== id);
+    setLists(remaining);
+    if (remaining.length > 0) setSelectedListId(remaining[0].id);
+    else setSelectedListId(null);
+  };
+
+  const renameSelectedList = (newTitle) => {
+    setLists((prev) => prev.map(l => l.id === selectedListId ? { ...l, title: newTitle } : l));
+    setEditingTitle(false);
+  };
+
+  const addTaskToSelected = () => {
+    if (!selectedListId) return;
     if (newTask.trim() === "") return;
-    setTasks([...tasks, { text: newTask, completed: false }]);
+    setLists(prev => prev.map(l => {
+      if (l.id !== selectedListId) return l;
+      return { ...l, tasks: [...l.tasks, { text: newTask.trim(), completed: false }] };
+    }));
     setNewTask("");
   };
 
-  // Function to cross off a task when completed (when the checkbox is clicked)
-  const toggleTaskCompletion = (index) => {
-    setTasks((prev) =>
-      prev.map((task, i) =>
-        i === index ? { ...task, completed: !task.completed } : task
-      )
-    );
+  const toggleTaskCompletion = (taskIndex) => {
+    setLists(prev => prev.map(l => {
+      if (l.id !== selectedListId) return l;
+      const newTasks = l.tasks.map((t, i) => i === taskIndex ? { ...t, completed: !t.completed } : t);
+      return { ...l, tasks: newTasks };
+    }));
   };
 
-  // Function to remove all completed tasks (when the button is clicked all crossed off tasks are removed)
-  const handleRemoveCompleted = () => {
-    setTasks(tasks.filter((t) => !t.completed));
+  const removeCompletedFromSelected = () => {
+    setLists(prev => prev.map(l => {
+      if (l.id !== selectedListId) return l;
+      return { ...l, tasks: l.tasks.filter(t => !t.completed) };
+    }));
   };
 
-  // The main return function that displays the To-Do List app
+  // UI helpers
+  const selectedList = lists.find((l) => l.id === selectedListId);
+
   return (
     <div className="App">
       <div className="container">
-        <div className="title">
-          <h1>To-Do List</h1>
+        <div className="headerRow">
+          <div className="tabs">
+            {lists.map((l) => (
+              <div key={l.id} className={`tab ${l.id === selectedListId ? "active" : ""}`} onClick={() => setSelectedListId(l.id)}>
+                <span className="tabTitle">{l.title}</span>
+                <button className="smallBtn" onClick={(e) => { e.stopPropagation(); removeList(l.id); }} title="Remove list">✕</button>
+              </div>
+            ))}
+            <div className="addTab">
+              <input value={newListTitle} onChange={(e) => setNewListTitle(e.target.value)} placeholder="New list title" onKeyDown={(e) => e.key === "Enter" && createList(newListTitle)} />
+              <button onClick={() => createList(newListTitle)}>Create</button>
+            </div>
+          </div>
         </div>
 
-        {/* Add task structure */}
-        <TodoAdd newTask={newTask} setNewTask={setNewTask} handleAddTask={handleAddTask} />
+        <div className="titleBar">
+          {selectedList ? (
+            <div className="titleLeft">
+              {!editingTitle ? (
+                <>
+                  <h1>{selectedList.title}</h1>
+                  <button className="iconBtn" title="Edit title" onClick={() => { setEditingTitle(true); setTimeout(() => titleInputRef.current && titleInputRef.current.focus(), 0); }}>✎</button>
+                </>
+              ) : (
+                <input
+                  ref={titleInputRef}
+                  className="titleEdit"
+                  defaultValue={selectedList.title}
+                  onBlur={(e) => renameSelectedList(e.target.value || "Untitled")}
+                  onKeyDown={(e) => { if (e.key === "Enter") { renameSelectedList(e.target.value || "Untitled"); } }}
+                />
+              )}
+            </div>
+          ) : (
+            <div className="noSelection">🗒️ No list selected — please create or select a list.</div>
+          )}
+        </div>
 
-        {/* Task list structure */}
-        <TodoList tasks={tasks} toggleTaskCompletion={toggleTaskCompletion} />
+        <div className="inputTask">
+          <input
+            type="text"
+            placeholder={selectedList ? "Enter a new task" : "Create or select a list first"}
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addTaskToSelected()}
+            disabled={!selectedList}
+          />
+          <button onClick={addTaskToSelected} disabled={!selectedList}>Add</button>
+        </div>
 
-        {/* Remove completed tasks button */}
-        <TodoRemove handleRemoveCompleted={handleRemoveCompleted} />
+        <ul>
+          {selectedList && selectedList.tasks.map((task, index) => (
+            <li key={index} className={task.completed ? "completed" : ""}>
+              <label>
+                <input type="checkbox" checked={task.completed} onChange={() => toggleTaskCompletion(index)} />
+                <span>{task.text}</span>
+                <button className="smallBtn removeTaskBtn" onClick={() => {
+                  // remove individual task
+                  setLists(prev => prev.map(l => {
+                    if (l.id !== selectedListId) return l;
+                    return { ...l, tasks: l.tasks.filter((_, i) => i !== index) };
+                  }));
+                }}>🗑️</button>
+              </label>
+            </li>
+          ))}
+        </ul>
+
+        <div className="actionsRow">
+          <button onClick={removeCompletedFromSelected} disabled={!selectedList}>Remove completed tasks</button>
+          {selectedList && <button onClick={() => { if (confirm("Remove all tasks from this list?")) setLists(prev => prev.map(l => l.id === selectedListId ? { ...l, tasks: [] } : l)); }} disabled={!selectedList}>Clear all</button>}
+        </div>
       </div>
     </div>
   );

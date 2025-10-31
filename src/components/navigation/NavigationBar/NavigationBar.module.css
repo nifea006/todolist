@@ -1,0 +1,10 @@
+.navigationBar {
+  background-color: cornflowerblue;
+  padding: 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}

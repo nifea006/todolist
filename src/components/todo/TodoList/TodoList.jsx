@@ -1,5 +1,5 @@
 import React from "react";
-import TodoItem from "../todo_item/TodoItem";
+import TodoItem from "../TodoItem/TodoItem";
 import styles from "./TodoList.module.css";
 
 const TodoList = ({ tasks, toggleTaskCompletion }) => {
