@@ -1,0 +1,10 @@
+.container {
+    justify-self: center;
+    align-self: center;
+    margin-top: 50px;
+    background-color: #faf7f2;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    min-width: 420px;
+}

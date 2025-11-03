@@ -2,15 +2,15 @@ import React from "react";
 import TodoItem from "../TodoItem/TodoItem";
 import styles from "./TodoList.module.css";
 
-const TodoList = ({ tasks, toggleTaskCompletion }) => {
+const TodoList = ({ tasks, onToggle, onRemove }) => {
   return (
     <ul className={styles.todoList}>
-      {tasks.map((task, i) => (
+      {tasks.map((task, index) => (
         <TodoItem
-          key={i}
-          taskCompleted={task.completed}
-          taskText={task.text}
-          toggleTaskCompletion={() => toggleTaskCompletion(i)}
+          key={index}
+          task={task}
+          onToggle={() => onToggle(index)}
+          onRemove={() => onRemove(index)}
         />
       ))}
     </ul>

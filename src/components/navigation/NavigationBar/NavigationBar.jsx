@@ -1,25 +1,22 @@
-import React from 'react';
-import styles from './NavigationBar.module.css';
-import Tab from '../Tab/Tab';
-import AddTabButton from '../AddTabButton/AddTabButton';
+import React from "react";
+import Tab from "../Tab/Tab";
+import AddTabButton from "../AddTabButton/AddTabButton";
+import styles from "./NavigationBar.module.css";
 
-const NavigationBar = ({ tabs, selectedTabId, addTab, removeTab, selectTab, renameTab }) => {
+const NavigationBar = ({ lists, selectedId, onSelect, onRemove, onAdd }) => {
   return (
-    <nav className={styles.navigationBar} role="navigation" aria-label="Lists">
-      <div className={styles.tabs} role="tablist">
-        {tabs.map((tab) => (
-          <Tab
-            key={tab.id}
-            tab={tab}
-            isActive={tab.id === selectedTabId}
-            onSelect={selectTab}
-            onRemove={removeTab}
-            onRename={renameTab}
-          />
-        ))}
-        <AddTabButton onAdd={() => addTab()} />
-      </div>
-    </nav>
+    <div className={styles.tabs}>
+      {lists.map((list) => (
+        <Tab
+          key={list.id}
+          list={list}
+          active={list.id === selectedId}
+          onSelect={() => onSelect(list.id)}
+          onRemove={() => onRemove(list.id)}
+        />
+      ))}
+      <AddTabButton onAdd={onAdd} />
+    </div>
   );
 };
 

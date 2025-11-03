@@ -1,0 +1,19 @@
+.titleBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titleEdit {
+    font-size: 1.4rem;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.iconBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transform: scaleX(-1);
+}

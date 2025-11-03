@@ -1,15 +1,29 @@
-.addButton {
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  padding: 0 12px;
-  cursor: pointer;
-  color: white;
+.addTab {
   display: flex;
+  gap: 8px;
   align-items: center;
-  height: 100%;
+  margin-left: 8px;
 }
 
-.addButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+.addTab input {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.addTab input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.addTab button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.addTab button:hover {
+  background: rgba(150, 150, 150, 0.2);
+  scale: 0.95;
 }

@@ -1,19 +1,16 @@
 import React from "react";
-import TodoCompleted from "../TodoCompleted/TodoCompleted";
 import styles from "./TodoItem.module.css";
 
-const TodoItem = ({ taskCompleted, taskText, toggleTaskCompletion }) => {
-    return (
-        <li className={taskCompleted ? styles.completed : ""}>
-            <label>
-                <TodoCompleted
-                    taskCompleted={taskCompleted}
-                    toggleTaskCompletion={toggleTaskCompletion}
-                />
-                <span>{taskText}</span>
-            </label>
-        </li>
-    );
+const TodoItem = ({ task, onToggle, onRemove }) => {
+  return (
+    <li className={task.completed ? styles.completed : ""}>
+      <label>
+        <input type="checkbox" checked={task.completed} onChange={onToggle} />
+        <span>{task.text}</span>
+        <button className={styles.removeBtn} onClick={onRemove}>🗑️</button>
+      </label>
+    </li>
+  );
 };
 
 export default TodoItem;

@@ -1,7 +1,7 @@
-.todoList {
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-    margin: 10px 25px;
-    padding: 0;
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0;
+    max-height: 320px;
+    overflow: auto;
 }
