@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TodoAdd.module.css";
 
-const TodoAdd = ({ newTask, setNewTask, handleAddTask }) => {
+const TodoAdd = ({ disabled, onAdd }) => {
+    const [value, setValue] = useState("");
+
+    const add = () => {
+        if (!value.trim()) return;
+        onAdd(value.trim());
+        setValue("");
+    };
+
     return (
-        <div className="addTaskOverlay hidden">
+        <>
             <input
-                type="text"
-                name="insertNewTask"
-                placeholder="Enter a new task"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAddTask()}
+                className={styles.input}
+                placeholder={disabled ? "Create or select a list first" : "Enter a new task"}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && add()}
+                disabled={disabled}
             />
-            <button className={styles.addButton} onClick={handleAddTask}>
-                Legg til
-            </button>
-        </div>
+            <button className={styles.btn} onClick={add} disabled={disabled}>Add</button>
+        </>
     );
 };
 

@@ -3,12 +3,18 @@ import styles from "./Tab.module.css";
 
 const Tab = ({ list, active, onSelect, onRemove }) => {
   return (
-    <div
-      className={`${styles.tab} ${active ? styles.active : ""}`}
-      onClick={onSelect}
-    >
+    <div className={`${styles.tab} ${active ? styles.active : ""}`} onClick={onSelect}>
       <span className={styles.tabTitle}>{list.title}</span>
-      <button className={styles.smallBtn} onClick={(e) => { e.stopPropagation(); onRemove(); }}>✕</button>
+      <button
+        className={styles.smallBtn}
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove();
+        }}
+        aria-label={`Remove list ${list.title}`}
+      >
+        ✕
+      </button>
     </div>
   );
 };

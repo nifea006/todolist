@@ -1,9 +1,10 @@
-.tabs {
+.navbar {
+  flex: 1;
   display: flex;
+  flex-wrap: wrap;
   background-color: rgb(130, 130, 175);
   padding: 8px;
   gap: 4px;
-  align-items: center;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }

@@ -1,33 +1,30 @@
-li {
-    padding: 8px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.03);
-}
-
-li:hover {
-    background: rgba(240, 240, 240, 0.9);
-}
-
-li label {
+.label {
     display: flex;
     align-items: center;
     gap: 8px;
     width: 100%;
 }
 
-.completed span {
-    text-decoration: line-through;
-    color: rgb(30, 30, 30);
-    opacity: 0.7;
+.label span {
+  flex: 1;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
 }
 
-input[type="checkbox"] {
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
+.text {
+    flex: 1;
+}
+
+.removeBtn {
+    background: transparent;
     border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+.removeBtn:hover {
+    background: rgba(0, 0, 0, 0.04);
 }

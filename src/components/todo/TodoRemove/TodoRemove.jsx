@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./TodoRemove.module.css";
 
-const TodoRemove = ({ handleRemoveCompleted }) => {
+const TodoRemove = ({ disabled, onClearAll }) => {
     return (
-        <button className={styles.removeButton} onClick={handleRemoveCompleted}>
-            Fjern fullførte oppgaver
+        <button className={styles.btn} onClick={onClearAll} disabled={disabled}>
+            Clear all
         </button>
     );
 };

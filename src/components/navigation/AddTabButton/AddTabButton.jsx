@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import styles from "./AddTabButton.module.css";
 
-const AddTabButton = ({ onAdd }) => {
-  const [newTitle, setNewTitle] = useState("");
+const AddTabButton = ({ onCreate }) => {
+  const [value, setValue] = useState("");
 
-  const handleAdd = () => {
-    if (newTitle.trim() === "") return;
-    onAdd(newTitle);
-    setNewTitle("");
+  const create = () => {
+    const title = (value && value.trim()) || "New List";
+    onCreate(title);
+    setValue("");
   };
 
   return (
     <div className={styles.addTab}>
-      <input
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
-        placeholder="New list title"
-        onKeyDown={(e) => e.key === "Enter" && handleAdd()}
-      />
-      <button onClick={handleAdd}>Create</button>
+      <input className={styles.input} placeholder="New list title" value={value} onChange={(e) => setValue(e.target.value)} onKeyDown={(e) => e.key === "Enter" && create()} />
+      <button className={styles.btn} onClick={create}>Create</button>
     </div>
   );
 };

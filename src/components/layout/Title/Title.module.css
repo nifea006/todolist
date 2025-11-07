@@ -1,11 +1,16 @@
-.titleBar {
+.titleLeft {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.titleEdit {
+.title {
     font-size: 1.4rem;
+    margin-right: 6px;
+}
+
+.titleEdit {
+    font-size: 1.2rem;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -15,5 +20,18 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
     transform: scaleX(-1);
+}
+
+.iconBtn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.noSelection {
+    padding: 24px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
 }

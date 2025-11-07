@@ -3,19 +3,13 @@ import Tab from "../Tab/Tab";
 import AddTabButton from "../AddTabButton/AddTabButton";
 import styles from "./NavigationBar.module.css";
 
-const NavigationBar = ({ lists, selectedId, onSelect, onRemove, onAdd }) => {
+const NavigationBar = ({ lists = [], selectedId, onSelect, onCreate, onRemove }) => {
   return (
-    <div className={styles.tabs}>
-      {lists.map((list) => (
-        <Tab
-          key={list.id}
-          list={list}
-          active={list.id === selectedId}
-          onSelect={() => onSelect(list.id)}
-          onRemove={() => onRemove(list.id)}
-        />
-      ))}
-      <AddTabButton onAdd={onAdd} />
+    <div className={styles.navbar}>
+        {lists.map((l) => (
+          <Tab key={l.id} list={l} active={l.id === selectedId} onSelect={() => onSelect(l.id)} onRemove={() => onRemove(l.id)} />
+        ))}
+        <AddTabButton onCreate={(title) => onCreate(title)} />
     </div>
   );
 };

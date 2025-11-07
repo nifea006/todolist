@@ -1,13 +1,18 @@
-.removeButton {
-    background-color: rgb(240, 0, 0);
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: rgb(195, 100, 100);
     border: none;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 7px;
+    cursor: pointer;
+    color: white;
 }
 
-.removeButton:hover {
-    cursor: pointer;
-    background-color: rgb(250, 0, 0);
-    scale: 1.03;
+.btn:hover {
+    background-color: rgb(170, 80, 80);
+    transform: scale(0.99);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

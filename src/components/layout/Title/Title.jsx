@@ -1,37 +1,46 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./Title.module.css";
 
-const Title = ({ title, onRename }) => {
+const Title = ({ selectedList, onRename }) => {
   const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (editing) inputRef.current?.focus();
+    if (selectedList) setValue(selectedList.title);
+    else setValue("");
+    setEditing(false);
+  }, [selectedList]);
+
+  useEffect(() => {
+    if (editing && inputRef.current) inputRef.current.focus();
   }, [editing]);
 
-  const handleBlur = (e) => {
-    onRename(e.target.value || "Untitled");
+  const finish = () => {
+    const newTitle = (value && value.trim()) || "Untitled";
+    if (selectedList && typeof onRename === "function") onRename(newTitle);
     setEditing(false);
   };
 
-  const handleKey = (e) => {
-    if (e.key === "Enter") handleBlur(e);
-  };
+  if (!selectedList) {
+    return <div className={styles.noSelection}>🗒️ No list selected — please create or select a list.</div>;
+  }
 
   return (
-    <div className={styles.titleBar}>
+    <div className={styles.titleLeft}>
       {!editing ? (
         <>
-          <h1>{title}</h1>
-          <button className={styles.iconBtn} onClick={() => setEditing(true)}>✎</button>
+          <h1 className={styles.title}>{selectedList.title}</h1>
+          <button className={styles.iconBtn} aria-label="Edit title" onClick={() => setEditing(true)}>✎</button>
         </>
       ) : (
         <input
           ref={inputRef}
-          defaultValue={title}
-          onBlur={handleBlur}
-          onKeyDown={handleKey}
           className={styles.titleEdit}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={finish}
+          onKeyDown={(e) => e.key === "Enter" && finish()}
         />
       )}
     </div>

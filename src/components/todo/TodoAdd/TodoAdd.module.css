@@ -1,36 +1,25 @@
-.addTaskOverlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
+.input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    min-width: 260px;
 }
 
-input[name="insertNewTask"] {
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
+.btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: rgb(195, 170, 140);
     border: none;
-}
-
-input[name="insertNewTask"]:hover {
-    background-color: rgb(245, 245, 245);
-    scale: 1.01;
-}
-
-.addButton {
-    background-color: rgb(0, 190, 0);
-    border: none;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 7px;
-}
-
-.addButton:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     cursor: pointer;
-    background-color: rgb(0, 210, 0);
-    scale: 1.05;
 }
 
-.hidden {
-    display: none;
+.btn:hover {
+    background-color: rgb(170, 145, 120);
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

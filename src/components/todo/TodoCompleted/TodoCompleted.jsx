@@ -1,14 +1,11 @@
 import React from "react";
 import styles from "./TodoCompleted.module.css";
 
-const TodoCompleted = ({ taskCompleted, toggleTaskCompletion }) => {
+const TodoCompleted = ({ disabled, onRemoveCompleted }) => {
     return (
-        <input 
-            type="checkbox" 
-            className={styles.checkbox}
-            checked={taskCompleted} 
-            onChange={toggleTaskCompletion} 
-        />
+        <button className={styles.btn} onClick={onRemoveCompleted} disabled={disabled}>
+            Remove completed tasks
+        </button>
     );
 };
 
