@@ -7,7 +7,7 @@ const Title = ({ selectedList, onRename }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (selectedList) setValue(selectedList.title);
+    if (selectedList) setValue(selectedList.name);
     else setValue("");
     setEditing(false);
   }, [selectedList]);
@@ -27,11 +27,11 @@ const Title = ({ selectedList, onRename }) => {
   }
 
   return (
-    <div className={styles.titleLeft}>
+    <div className={styles.titleContainer}>
       {!editing ? (
         <>
-          <h1 className={styles.title}>{selectedList.title}</h1>
-          <button className={styles.iconBtn} aria-label="Edit title" onClick={() => setEditing(true)}>✎</button>
+          <h1 className={styles.title}>{selectedList.name}</h1>
+          <button className={styles.editButton} aria-label="Edit title" onClick={() => setEditing(true)}>✎</button>
         </>
       ) : (
         <input
