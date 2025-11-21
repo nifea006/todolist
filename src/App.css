@@ -1,6 +1,5 @@
 * {
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
@@ -18,25 +17,6 @@ body {
     gap: 10px;
 }
 
-.container {
-    justify-self: center;
-    align-self: center;
-    background-color: #faf7f2;
-    border-radius: 10px;
-    min-width: 420px;
-    padding: 18px;
-}
-
-.headerRow {
-    display: flex;
-    margin-bottom: 12px;
-}
-
-.titleBar {
-    margin-bottom: 8px;
-}
-
-/* loading */
 .loader {
     margin: auto;
     margin-top: 45vh;

@@ -1,5 +1,4 @@
 .navbar {
-  flex: 1;
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(130, 130, 175);
@@ -7,4 +6,11 @@
   gap: 4px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }

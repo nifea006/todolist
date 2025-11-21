@@ -5,7 +5,7 @@ import TodoCompleted from "../TodoCompleted/TodoCompleted";
 import TodoRemove from "../TodoRemove/TodoRemove";
 import styles from "./TodoList.module.css";
 
-const TodoList = ({ selectedList, onAddTask, onToggleTask, onRemoveTask, onRemoveCompleted, onClearAll }) => {
+const TodoList = ({ selectedList, onAddTask, onToggleTask, onRemoveTask, onRenameTask, onRemoveCompleted, onClearAll }) => {
   return (
     <div className={styles.todoWrap}>
       <div className={styles.inputTask}>
@@ -13,24 +13,23 @@ const TodoList = ({ selectedList, onAddTask, onToggleTask, onRemoveTask, onRemov
       </div>
 
       <ul className={styles.ul}>
-          {selectedList.tasks
-            ? selectedList.tasks.map((task, i) => (
-              <li key={i} className={`${styles.li} ${task.completed ? styles.completed : ""}`}>
+          {selectedList?.tasks
+            ? selectedList.tasks.map((task) => (
+              <li key={task.id} className={`${styles.li} ${task.completed ? styles.completed : ""}`}>
                 <TodoItem
                   task={task}
-                  onToggle={() => onToggleTask(i)}
-                  onRemove={() => onRemoveTask(i)}
+                  onToggle={() => onToggleTask(task.id)}
+                  onRemove={() => onRemoveTask(task.id)}
+                  onRename={(newText) => onRenameTask(task.id, newText)}
                 />
               </li>
             ))
         : <div className={styles.noSelectionInner}>Create or select a list to show tasks.</div>}
       </ul>
 
-      {/* {console.log(selectedList)} */}
-
       <div className={styles.actionsRow}>
-        <TodoCompleted disabled={!selectedList} onRemoveCompleted={onRemoveCompleted} />
-        <TodoRemove disabled={!selectedList} onClearAll={onClearAll} />
+        <TodoCompleted disabled={!selectedList?.tasks?.length} onRemoveCompleted={onRemoveCompleted} />
+        <TodoRemove disabled={!selectedList?.tasks?.length} onClearAll={onClearAll} />
       </div>
     </div>
   );
