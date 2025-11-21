@@ -6,7 +6,7 @@ const TodoItem = ({ task, onToggle, onRemove }) => {
     <label className={styles.label}>
       <input type="checkbox" checked={task.completed} onChange={onToggle} />
       <span className={styles.text}>{task.text}</span>
-      <button className={styles.removeBtn} onClick={(e) => { e.stopPropagation(); onRemove(); }}>🗑️</button>
+      <button className={styles.buttonRemoveTask} onClick={(e) => { e.stopPropagation(); onRemove(); }}>🗑️</button>
     </label>
   );
 };

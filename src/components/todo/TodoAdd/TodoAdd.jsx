@@ -20,7 +20,7 @@ const TodoAdd = ({ disabled, onAdd }) => {
                 onKeyDown={(e) => e.key === "Enter" && add()}
                 disabled={disabled}
             />
-            <button className={styles.btn} onClick={add} disabled={disabled}>Add</button>
+            <button className={styles.addButton} onClick={add} disabled={disabled}>Add</button>
         </>
     );
 };
