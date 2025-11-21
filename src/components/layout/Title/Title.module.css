@@ -1,4 +1,4 @@
-.titleLeft {
+.titleContainer {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -16,7 +16,7 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.iconBtn {
+.editButton {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -25,7 +25,7 @@
     transform: scaleX(-1);
 }
 
-.iconBtn:hover {
+.editButton:hover {
     background: rgba(0, 0, 0, 0.04);
 }
 

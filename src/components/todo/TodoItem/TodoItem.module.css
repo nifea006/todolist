@@ -17,7 +17,34 @@
     flex: 1;
 }
 
-.removeBtn {
+.editInput {
+  flex: 1;
+  padding: 4px 8px;
+  border: 2px solid cornflowerblue;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.editInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.1);
+}
+
+.editButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transform: scaleX(-1);
+}
+
+.editButton:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.buttonRemoveTask {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -25,6 +52,6 @@
     border-radius: 6px;
 }
 
-.removeBtn:hover {
+.buttonRemoveTask:hover {
     background: rgba(0, 0, 0, 0.04);
 }
