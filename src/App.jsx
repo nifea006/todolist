@@ -175,6 +175,27 @@ function App() {
     }
   };
 
+  // Rename task (DB)
+  const renameTask = async (taskId, newText) => {
+    if (!newText?.trim()) return;
+    try {
+      await fetch(`${API_URL}/tasks/${taskId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: newText }),
+      });
+      setLists((prev) =>
+        prev.map((l) =>
+          l.id === selectedListId
+            ? { ...l, tasks: l.tasks.map((t) => (t.id === taskId ? { ...t, text: newText } : t)) }
+            : l
+        )
+      );
+    } catch (err) {
+      console.error("renameTask error:", err);
+    }
+  };
+
   const selectedList = lists.find((l) => l.id === selectedListId) || null;
 
   if (loading) return <div className="loader"></div>;
@@ -195,13 +216,12 @@ function App() {
           selectedList={selectedList}
         />
         <TodoList
-          tasks={selectedList ? selectedList.tasks || [] : []}
-          onToggleTask={(taskId) => toggleTask(taskId)}
-          onRemoveTask={(taskId) => removeTask(taskId)}
-          onClearAll={() => clearAll()}
-          onRemoveCompleted={() => removeCompleted()}
-          onAddTask={(text) => addTask(text)}
           selectedList={selectedList}
+          onAddTask={addTask}
+          onToggleTask={toggleTask}
+          onRemoveTask={removeTask}
+          onRenameTask={renameTask}
+          onRemoveCompleted={() => removeCompleted(selectedListId)}
         />
       </Container>
     </div>
