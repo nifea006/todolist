@@ -222,6 +222,7 @@ function App() {
           onRemoveTask={removeTask}
           onRenameTask={renameTask}
           onRemoveCompleted={() => removeCompleted(selectedListId)}
+          onClearAll={() => clearAll(selectedListId)}
         />
       </Container>
     </div>
