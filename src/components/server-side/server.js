@@ -18,14 +18,43 @@ const db = mysql.createConnection({
   database: process.env.REACT_APP_DB_NAME,
 });
 
-// Connect once
+// Connect to DB
 db.connect((err) => {
   if (err) {
     console.error("DB connection error:", err);
     return;
   }
   console.log("Connected to MySQL");
+
+  // Create tables
+  const createListsTable = `
+    CREATE TABLE IF NOT EXISTS lists (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const createTasksTable = `
+    CREATE TABLE IF NOT EXISTS tasks (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      list_id INT NOT NULL,
+      text VARCHAR(255) NOT NULL,
+      completed TINYINT(1) NOT NULL DEFAULT 0,
+      FOREIGN KEY (list_id) REFERENCES lists(id) ON DELETE CASCADE
+    );
+  `;
+
+  db.query(createListsTable, (err) => {
+    if (err) console.error("Error creating lists table:", err);
+    else console.log("Lists table OK");
+  });
+
+  db.query(createTasksTable, (err) => {
+    if (err) console.error("Error creating tasks table:", err);
+    else console.log("Tasks table OK");
+  });
 });
+
 
 // Lists endpoints
 
