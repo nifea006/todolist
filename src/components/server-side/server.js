@@ -1,4 +1,4 @@
-// Start the server with: node src/components/server-side/server.js
+// Start the server with: node .\src\components\server-side\server.js
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -10,12 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// DB connection
+// !!! Feelout the properties of the databse you are using !!!
 const db = mysql.createConnection({
-  host: process.env.REACT_APP_DB_HOST,
-  user: process.env.REACT_APP_DB_USER,
-  password: process.env.REACT_APP_DB_PASSWORD,
-  database: process.env.REACT_APP_DB_NAME,
+  host: process.env.REACT_APP_DB_HOST || "localhost",
+  user: process.env.REACT_APP_DB_USER || "your_user_name",
+  password: process.env.REACT_APP_DB_PASSWORD || "your_password",
+  database: process.env.REACT_APP_DB_NAME || "your_database_name",
 });
 
 // Connect to DB

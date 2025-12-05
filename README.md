@@ -1,43 +1,39 @@
-# Getting Started with Create React App
+# A To-Do List App Built with React
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## How to Start the App
 
-In the project directory, you can run:
+1. First, clone the repository in a folder of your choice.
+2. Open a Command Prompt and navigate to the cloned repository.
+3. In the repository directory, run:
 
-### `npm start`
+        npm install -g npm
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    to install the Node Package Manager.
+4. Now you must install the dependencies by running:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+        npm install express
+        npm install cors
 
-### `npm test`
+5. To run this app, you will also need a MySQL-based database. I used MariaDB. Don’t forget to install the MySQL package in the command prompt:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+        npm install mysql
 
-### `npm run build`
+6. Fill out the properties of the database in [server.js](./src/components/server-side/server.js) (user, password, database).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+7. To start the app in development mode, run the following in the project directory:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+        npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   Then open [http://localhost:3000](http://localhost:3000)
+   in your browser to view it.
 
-### `npm run eject`
+8. In a new PowerShell window, navigate to the project directory and run:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+        node .\src\components\server-side\server.js
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   This will start the database server.
 
 ## Learn More
 
@@ -64,7 +60,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
